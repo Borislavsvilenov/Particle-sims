@@ -1,28 +1,28 @@
 import blank_sim_v1 as bs
 import pygame as pg
 import numpy as np
+gravity = 2
 
 def fall_boundaries(particle):
-    gravity = 2
-    elasticity_factor = bs.elasticity_factor
+    
 
     particle.acceleration = pg.Vector2(0, gravity)
 
     if particle.position.x <= particle.mass:
         particle.position.x = particle.mass
-        particle.velocity.x = abs(particle.velocity.x) * elasticity_factor
+        particle.velocity.x = abs(particle.velocity.x)
 
     if particle.position.x >= bs.screen.get_width() - particle.mass:
         particle.position.x = bs.screen.get_width() - particle.mass
-        particle.velocity.x = -abs(particle.velocity.x) * elasticity_factor
+        particle.velocity.x = -abs(particle.velocity.x)
 
     if particle.position.y >= bs.screen.get_height() - particle.mass:
         particle.position.y = bs.screen.get_height() - particle.mass
-        particle.velocity.y = -abs(particle.velocity.y) * elasticity_factor
+        particle.velocity.y = -abs(particle.velocity.y)
 
     if particle.position.y <= particle.mass:
         particle.position.y = particle.mass
-        particle.velocity.y = abs(particle.velocity.y) * elasticity_factor
+        particle.velocity.y = abs(particle.velocity.y)
 
 
 
