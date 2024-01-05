@@ -8,7 +8,7 @@ running = True
 screen = pg.display.set_mode((750, 750))
 clock =  pg.time.Clock()
 center_x, center_y = screen.get_width() / 2, screen.get_height() / 2
-bounciness = 0.9
+bounciness = 0.8
 font = pg.font.Font(None, 36)
 grid_size = 40
 t = 0
@@ -122,6 +122,7 @@ def Main():
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
+            pg.display.quit()
 
     for particle in Particles:
         Particle.update_motion_and_position(particle)
