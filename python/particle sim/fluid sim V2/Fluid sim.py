@@ -37,5 +37,8 @@ while bs.Main():
 
     frame_counter += 1
 
+            
+bs.pg.display.quit()
+
 
 

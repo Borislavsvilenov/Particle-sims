@@ -122,7 +122,6 @@ def Main():
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
-            pg.display.quit()
 
     for particle in Particles:
         Particle.update_motion_and_position(particle)
