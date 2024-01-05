@@ -36,7 +36,7 @@ class Particle:
         Particles = np.append(Particles, self)
 
     def update_motion_and_position(self): #update position velocity and acceleration
-        self.position += self.velocity * t
+        self.position += self.velocity * t        
         self.velocity += self.acceleration * t
         self.acceleration += self.Fnet / self.mass
 
@@ -66,8 +66,8 @@ def handle_collision(point_a, point_b, distance):
     point_b.position -= overlap * collision_normal
 
     #update velocity for bounce off
-    point_a.velocity += 2 * (point_b.mass / total_mass) * velocity_normal * collision_normal * bounciness
-    point_b.velocity -= 2 * (point_a.mass / total_mass) * velocity_normal * collision_normal * bounciness
+    point_a.velocity = point_a.velocity + (point_b.mass / total_mass) * velocity_normal * collision_normal * bounciness
+    point_b.velocity = point_b.velocity - (point_a.mass / total_mass) * velocity_normal * collision_normal * bounciness
 
 def update_grid():
     global grid_size

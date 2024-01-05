@@ -29,8 +29,8 @@ while bs.Main():
         fall_boundaries(point)
 
     if frame_counter % 10 == 0:
-        bs.Particle(np.array([100, 50], dtype=np.float32),  #Position
-                np.array([30, 0], dtype=np.float32),  #Velocity
+        bs.Particle(np.array([100, 100], dtype=np.float32),  #Position
+                np.array([20, 0], dtype=np.float32),  #Velocity
                 np.array([0, gravity], dtype=np.float32),  #Acceleration
                 np.array([0, 0], dtype=np.float32),  #Force
                 10, 10, "white")  #Mass and Radius
