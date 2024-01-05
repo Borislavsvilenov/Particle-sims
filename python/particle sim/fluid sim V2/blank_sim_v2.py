@@ -5,12 +5,12 @@ import numpy as np
 #initialize the screen
 pg.init()
 running = True
-screen = pg.display.set_mode((750, 750))
+screen = pg.display.set_mode((800, 800))
 clock =  pg.time.Clock()
 center_x, center_y = screen.get_width() / 2, screen.get_height() / 2
 bounciness = 0.8
 font = pg.font.Font(None, 36)
-grid_size = 40
+grid_size = 20
 t = 0
 
 
@@ -47,7 +47,7 @@ def normalize(vector):
     vector_magnitude = np.sqrt((vector[0] ** 2) + (vector[1] ** 2))
 
     if vector_magnitude == 0:
-        normal_vector = 0
+        normal_vector = np.array((0, 0))
     else:
         normal_vector = vector / vector_magnitude
 
@@ -57,8 +57,8 @@ def handle_collision(point_a, point_b, distance):
     #define some variables
     global bounciness
     overlap = (point_a.radius + point_b.radius - distance) / 2
-    collision_normal = normalize(point_a.position - point_b.position)
-    velocity_normal = (point_a.velocity + point_b.velocity).dot(collision_normal)
+    collision_normal = normalize(point_b.position - point_a.position)
+    velocity_normal = (point_b.velocity + point_a.velocity).dot(collision_normal)
     total_mass = point_a.mass + point_b.mass
 
     #update position for no overlap
@@ -66,8 +66,8 @@ def handle_collision(point_a, point_b, distance):
     point_b.position -= overlap * collision_normal
 
     #update velocity for bounce off
-    point_a.velocity = point_a.velocity + (point_b.mass / total_mass) * velocity_normal * collision_normal * bounciness
-    point_b.velocity = point_b.velocity - (point_a.mass / total_mass) * velocity_normal * collision_normal * bounciness
+    point_a.velocity = point_a.velocity + 2 * (point_b.mass / total_mass) * velocity_normal * collision_normal * bounciness
+    point_b.velocity = point_b.velocity - 2 * (point_a.mass / total_mass) * velocity_normal * collision_normal * bounciness
 
 def update_grid():
     global grid_size
