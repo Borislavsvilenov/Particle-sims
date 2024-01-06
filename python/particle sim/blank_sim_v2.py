@@ -43,7 +43,7 @@ class Particle:
     def draw_particle(self): #Draw the point on the display
         pg.draw.circle(screen, self.color, (int(self.position[0]), int(self.position[1])), self.radius)
 
-def normalizeation(vector):
+def normalization(vector):
     vector_magnitude = np.sqrt((vector[0] ** 2) + (vector[1] ** 2))
 
     if vector_magnitude == 0:
@@ -57,7 +57,7 @@ def handle_collision(point_a, point_b, distance):
     #define some variables
     global bounciness
     overlap = ((point_a.radius + point_b.radius) - distance) / 2
-    collision_normal = normalizeation(point_b.position - point_a.position)
+    collision_normal = normalization(point_b.position - point_a.position)
     velocity_normal = np.dot((point_b.velocity + point_a.velocity), collision_normal)
 
     #update position for no overlap
