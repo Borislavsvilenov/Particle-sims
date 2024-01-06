@@ -56,13 +56,13 @@ def normalizeation(vector):
 def handle_collision(point_a, point_b, distance):
     #define some variables
     global bounciness
-    overlap = (point_a.radius + point_b.radius - distance) / 2
+    overlap = ((point_a.radius + point_b.radius) - distance) / 2
     collision_normal = normalizeation(point_b.position - point_a.position)
-    velocity_normal = (point_b.velocity + point_a.velocity).dot(collision_normal)
+    velocity_normal = np.dot((point_b.velocity + point_a.velocity), collision_normal)
 
     #update position for no overlap
-    point_a.position += overlap * collision_normal
-    point_b.position -= overlap * collision_normal
+    point_a.position += collision_normal * overlap
+    point_b.position -= collision_normal * overlap
 
     #update velocity for bounce off
     point_a.velocity = point_a.velocity + (velocity_normal * collision_normal * bounciness)
