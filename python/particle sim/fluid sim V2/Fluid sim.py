@@ -1,5 +1,8 @@
-import blank_sim_v2 as bs
+import sys
 import numpy as np
+sys.path.insert(1, '/Users/borislavsvilenov/Personal/python/particle sim')
+import blank_sim_v2 as bs
+
 gravity = 2
 
 def fall_boundaries(particle):

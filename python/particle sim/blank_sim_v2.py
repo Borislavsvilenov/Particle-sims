@@ -59,15 +59,14 @@ def handle_collision(point_a, point_b, distance):
     overlap = (point_a.radius + point_b.radius - distance) / 2
     collision_normal = normalizeation(point_b.position - point_a.position)
     velocity_normal = (point_b.velocity + point_a.velocity).dot(collision_normal)
-    total_mass = point_a.mass + point_b.mass
 
     #update position for no overlap
     point_a.position += overlap * collision_normal
     point_b.position -= overlap * collision_normal
 
     #update velocity for bounce off
-    point_a.velocity = point_a.velocity + 2 * (point_b.mass / total_mass) * velocity_normal * collision_normal * bounciness
-    point_b.velocity = point_b.velocity - 2 * (point_a.mass / total_mass) * velocity_normal * collision_normal * bounciness
+    point_a.velocity = point_a.velocity + (velocity_normal * collision_normal * bounciness)
+    point_b.velocity = point_b.velocity - (velocity_normal * collision_normal * bounciness)
 
 def update_grid():
     global grid_size
