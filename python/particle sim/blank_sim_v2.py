@@ -15,7 +15,8 @@ t = 0
 
 
 Particles = np.array([])
-Particles_in_grid = np.empty((int(screen.get_width() / grid_size), int(screen.get_height() / grid_size), 1), dtype=object)
+Particles_in_grid = np.empty((int(screen.get_width() / grid_size), int(screen.get_height() / grid_size)), dtype=object)
+Particles_in_grid.fill([])
 
 class Particle:
     global screen
