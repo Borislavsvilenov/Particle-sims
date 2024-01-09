@@ -19,6 +19,7 @@ Particles_in_grid = np.empty((int(screen.get_width() / grid_size), int(screen.ge
 Particles_in_grid.fill([])
 
 class Particle:
+    Particle_count = 0
     global screen
 
     def __init__(self, position, velocity, acceleration, force, mass, radius, color):
@@ -35,6 +36,7 @@ class Particle:
 
         global Particles
         Particles = np.append(Particles, self)
+        Particle.Particle_count += 1
 
     def update_motion_and_position(self): #update position velocity and acceleration
         self.position += self.velocity * t        
@@ -106,10 +108,12 @@ def call_collision_check():
                                         if distance <= (point_a.radius + point_b.radius):
                                             handle_collision(point_a, point_b, distance)
           
-def display_fps(font, clock):
+def display_fps(font, clock, count):
     fps = clock.get_fps()
     fps_text = font.render(f"FPS: {int(fps)}", True, pg.Color("orange"))
+    count_text = font.render("Particles: " + str(count), True, pg.Color("orange"))
     screen.blit(fps_text, (10, 10))
+    screen.blit(count_text, (10, 40))
 
 def Main():
     global running
@@ -117,7 +121,7 @@ def Main():
     screen.fill("black")
 
     call_collision_check()
-    display_fps(font, clock)
+    display_fps(font, clock, Particle.Particle_count)
 
     for event in pg.event.get():
         if event.type == pg.QUIT:

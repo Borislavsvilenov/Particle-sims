@@ -85,10 +85,13 @@ def distances():
                 handle_collision(PointA, PointB, DistanceAB)
 
 
-def display_fps(font, clock):
+def display_fps(font, clock, count):
     fps = clock.get_fps()
     fps_text = font.render(f"FPS: {int(fps)}", True, pg.Color("orange"))
+    count_text = font.render("Particles: " + str(count), True, pg.Color("orange"))
     screen.blit(fps_text, (10, 10))
+    screen.blit(count_text, (10, 40))
+
 
 font = pg.font.Font(None, 36)
 
@@ -111,7 +114,7 @@ def Run():     #Called externaly to update the screen and particles
         Particle.drawParticle(Particles[i])
 
     distances()
-    display_fps(font, clock)
+    display_fps(font, clock, Particle.amountOfParticles)
 
     clock.tick(60)
 
