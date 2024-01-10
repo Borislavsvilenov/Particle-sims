@@ -7,6 +7,7 @@ screen = pg.display.set_mode((800, 800))
 font = pg.font.Font(None, 36)
 clock =  pg.time.Clock()
 t = clock.tick(60) / 100
+substeps = 3
 
 Particles = np.array([], dtype=object)
 
@@ -69,19 +70,21 @@ def handle_collision(p1, p2, distance):
 
 def call_collision_check():
     global Particles
+    global substeps
 
     P_in_grid = grid(Particle.grid_size, Particles)
-    for point1x in range(1, len(P_in_grid) - 1):
-        for point1y in range(1, len(P_in_grid[point1x]) - 1):
-            for p1 in P_in_grid[point1x, point1y]:
-                if p1 is not None:
-                    for point2x in range(point1x - 1, point1x + 1):
-                        for point2y in range(point1y - 1, point1y + 1):
-                            for p2 in P_in_grid[point2x, point2y]:
-                                if p1 != p2:
-                                    d = distance(p1, p2)
-                                    if d <= p1.radius + p2.radius:
-                                        handle_collision(p1, p2, d)
+    for i in range(0, substeps):    
+        for point1x in range(0, len(P_in_grid)):
+            for point1y in range(0, len(P_in_grid[point1x])):
+                for p1 in P_in_grid[point1x, point1y]:
+                    if p1 is not None:
+                        for point2x in range(point1x - 1, point1x + 1):
+                            for point2y in range(point1y - 1, point1y + 1):
+                                for p2 in P_in_grid[point2x, point2y]:
+                                    if p1 != p2:
+                                        d = distance(p1, p2)
+                                        if d <= p1.radius + p2.radius:
+                                            handle_collision(p1, p2, d)
 
 def grid(grid_size, Particles):
     Particles_in_grid = np.empty((int(screen.get_width() / grid_size), int(screen.get_height() / grid_size)), dtype=object)
