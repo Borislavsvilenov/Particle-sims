@@ -14,8 +14,8 @@ if __name__ == '__main__':
                 [0, 0],  #Force
                 20, 10, "white")  #Mass and Radius
 
-    bs.Particle([90, 150],  #Position
-                [0, 0],  #Velocity
+    bs.Particle([90, 170],  #Position
+                [0, -10],  #Velocity
                 [0, 0],  #Acceleration
                 [0, 0],  #Force
                 20, 10, "white")  #Mass and Radius
