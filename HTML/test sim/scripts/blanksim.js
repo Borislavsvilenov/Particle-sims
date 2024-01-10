@@ -2,10 +2,6 @@ const canvas = document.getElementById("Workspace");
 const ctx = canvas.getContext("2d");
 const dt = 0.1;
 
-function delay(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
-  }
-
 class Particle{
     constructor(position, velocity, radius, color){
         this.position = position;
@@ -32,9 +28,12 @@ class Particle{
 let point1 = new Particle([50, 50], [10, 0], 10, '#FFFFFF');
 point1.draw_particle();
 
-for(i=1; i<100; i++){
+function Main(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     point1.draw_particle();
     point1.update_motion();
-    delay(10000);
+
+    requestAnimationFrame(Main);
 }
+
+Main();
