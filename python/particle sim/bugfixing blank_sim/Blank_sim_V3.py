@@ -59,12 +59,13 @@ def handle_collision(p1, p2, distance):
     overlap = (p1.radius + p2.radius - distance) / 2
     collision_normal = normalize(p1.position - p2.position)
     velocity_normal = np.dot(p1.velocity - p2.velocity, collision_normal)
+    total_mass = p1.mass + p2.mass
 
     p1.position += overlap * collision_normal
     p2.position -= overlap * collision_normal
 
-    p1.velocity -= velocity_normal * collision_normal * Particle.bounciness
-    p2.velocity += velocity_normal * collision_normal * Particle.bounciness
+    p1.velocity -= 2 * (p2.mass / total_mass) * velocity_normal * collision_normal * Particle.bounciness
+    p2.velocity += 2 * (p1.mass / total_mass) * velocity_normal * collision_normal * Particle.bounciness
 
 def call_collision_check():
     global Particles
