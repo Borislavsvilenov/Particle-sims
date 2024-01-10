@@ -1,11 +1,21 @@
 <html>
     <body bgcolor="#151515">
-    <canvas id="Workspace" width="1000" height="1000"></canvas>
+    <canvas id="Workspace" width="800" height="800"></canvas>
         <script>
-            m = document.getElementById("Workspace").getContext("2d")
+            canvas = document.getElementById("Workspace")
+            ctx = canvas.getContext("2d")
 
-            point = function(x,y,c){m.fillStyle=c; m.fillRect(x,y,3,3)}
-            
+            function draw_particle(x,y,r,c){
+                ctx.beginPath();
+                ctx.arc(x,y,r,0,2 * Math.PI,false);
+                ctx.fillStyle = c;
+                ctx.fill();
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = c;
+                ctx.stroke();
+            }
+
+            draw_particle(50,50,10,'green')
 
         </script>
     </body>
