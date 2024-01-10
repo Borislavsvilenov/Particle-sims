@@ -3,19 +3,27 @@
     <canvas id="Workspace" width="800" height="800"></canvas>
         <script>
             canvas = document.getElementById("Workspace")
-            ctx = canvas.getContext("2d")
+            const ctx = canvas.getContext("2d")
 
-            function draw_particle(x,y,r,c){
+            class Particle{
+                constructor(x, y , radius, color){
+                    this.x = x;
+                    this.y = y;
+                    this.radius = radius;
+                    this.color = color;
+                }
+                draw_particle(){
                 ctx.beginPath();
-                ctx.arc(x,y,r,0,2 * Math.PI,false);
-                ctx.fillStyle = c;
+                ctx.arc(this.x, this.y, this.radius, 0.2 * Math.PI, false);
+                ctx.fillStyle = this.color;
                 ctx.fill();
-                ctx.lineWidth = 5;
-                ctx.strokeStyle = c;
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = this.color;
                 ctx.stroke();
-            }
+            }}
 
-            draw_particle(50,50,10,'green')
+            let point1 = new Particle(50, 50, 10, '#FFFFFF')
+            point1.draw_particle()
 
         </script>
     </body>
