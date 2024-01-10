@@ -71,14 +71,17 @@ def call_collision_check():
     global Particles
 
     P_in_grid = grid(Particle.grid_size, Particles)
-    for p1 in Particles:
-        if p1 is not None:
-            for point2 in range(p1.id, len(Particles)):
-                p2 = Particles[point2]
-                if p1 != p2:
-                    d = distance(p1, p2)
-                    if d <= p1.radius + p2.radius:
-                        handle_collision(p1, p2, d)
+    for point1x in range(1, len(P_in_grid) - 1):
+        for point1y in range(1, len(P_in_grid[point1x]) - 1):
+            for p1 in P_in_grid[point1x, point1y]:
+                if p1 is not None:
+                    for point2x in range(point1x - 1, point1x + 1):
+                        for point2y in range(point1y - 1, point1y + 1):
+                            for p2 in P_in_grid[point2x, point2y]:
+                                if p1 != p2:
+                                    d = distance(p1, p2)
+                                    if d <= p1.radius + p2.radius:
+                                        handle_collision(p1, p2, d)
 
 def grid(grid_size, Particles):
     Particles_in_grid = np.empty((int(screen.get_width() / grid_size), int(screen.get_height() / grid_size)), dtype=object)
