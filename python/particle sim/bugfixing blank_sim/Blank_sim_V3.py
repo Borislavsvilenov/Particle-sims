@@ -69,6 +69,8 @@ def handle_collision(p1, p2, distance):
 
 def call_collision_check():
     global Particles
+
+    P_in_grid = grid(Particle.grid_size, Particles)
     for p1 in Particles:
         if p1 is not None:
             for point2 in range(p1.id, len(Particles)):
@@ -77,6 +79,17 @@ def call_collision_check():
                     d = distance(p1, p2)
                     if d <= p1.radius + p2.radius:
                         handle_collision(p1, p2, d)
+
+def grid(grid_size, Particles):
+    Particles_in_grid = np.empty((int(screen.get_width() / grid_size), int(screen.get_height() / grid_size)), dtype=object)
+    Particles_in_grid.fill([])
+
+    for self in Particles:
+        x = int(self.position[0] / grid_size) - 1
+        y = int(self.position[1] / grid_size) - 1
+        Particles_in_grid[x, y] = np.append(Particles_in_grid[x, y], self)
+
+    return Particles_in_grid
 
 def display_fps_and_particle_count(font, clock, count):
     fps = clock.get_fps()
