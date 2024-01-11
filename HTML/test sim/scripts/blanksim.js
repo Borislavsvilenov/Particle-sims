@@ -25,7 +25,7 @@ class Particle{
     }
 }
 
-let point1 = new Particle([50, 50], [10, 0], 10, '#FFFFFF');
+let point1 = new Particle([50, 50], [10, 10], 10, '#FFFFFF');
 point1.draw_particle();
 
 function Main(){
