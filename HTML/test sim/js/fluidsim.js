@@ -21,23 +21,24 @@ class Vector2D{
         return new Vector2D(this.x * scaler, this.y * scaler);
     }
     dot(secondVec){
-        return (this.x * secondVec.x) + (this.y * secondVec.y);
+        return new Vector2D(this.x * secondVec.x) + (this.y * secondVec.y);
     }
     mag(){
         return Math.hypot(this.x, this.y);
     }
     norm(){
-        return this.scale(1 / this.mag());
+        return new Vector2D(this.scale(1 / this.mag()));
     }
 }
 
 class Particle{
-    constructor(position, velocity, acceleration, radius, color){
+    constructor(position, velocity, acceleration, radius, mass, color){
         this.position = position;
         this.velocity = velocity;
         this.acceleration = acceleration;
 
         this.radius = radius;
+        this.mass = mass;
         this.color = color;
 
         particles.push(this);
@@ -77,6 +78,19 @@ function distance(point1, point2){
     return Math.hypot((point1.position.x - point2.position.x), (point1.position.y - point2.position.y));
 }
 
+function collide(A, B, d){
+    let overlap = (A.radius + B.radius - d) / 2;
+    let collision_norm = A.position.sub(B.position).norm();
+    let velocity_norm = A.velocity.sub(B.velocity).dot(collision_norm);
+    let mass = A.mass + B.mass;
+
+    A.position = A.position.add(collision_norm * overlap);
+    B.position = B.position.sub(collision_norm * overlap);
+
+    A.velocity = A.velocity.sub(2 * (B.mass / mass) * velocity_norm * collision_norm * bounciness);
+    B.velocity = B.velocity.add(2 * (A.mass / mass) * velocity_norm * collision_norm * bounciness);
+}
+
 function call_collision_check(){
     for(let p1 = 0; p1 < particles.length; p1++){
         for(let p2 = p1 + 1; p2 < particles.length; p2++){
@@ -90,12 +104,6 @@ function call_collision_check(){
     }
 }   
 
-function collide(A, B, d){
-    let overlap = (A.radius + B.radius - d) / 2;
-
-
-}
-
 function Main(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#000000';
@@ -107,15 +115,26 @@ function Main(){
             particles[point].update_motion();
             bounds(particles[point]);
     }}
-
+    call_collision_check()
 
     requestAnimationFrame(Main);
 
 }
 
-new Particle([100, 100], [0, 0], [0, 1], 10, '#FFFFFF');
-new Particle([200, 200], [0, 0], [0, 1], 10, '#FFFFFF');
-new Particle([300, 300], [10, 0], [0, 1], 10, '#FFFFFF');
+new Particle(new Vector2D(100, 100),
+             new Vector2D(0, 0),
+             new Vector2D(0, 1),
+             10, 10, '#FFFFFF');
+
+new Particle(new Vector2D(200, 200),
+             new Vector2D(0, 0),
+             new Vector2D(0, 1),
+             10, 10, '#FFFFFF');
+
+new Particle(new Vector2D(300, 300),
+             new Vector2D(10, 0),
+             new Vector2D(0, 1),
+             10, 10, '#FFFFFF');
 
 Main();
 
