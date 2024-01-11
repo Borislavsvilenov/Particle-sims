@@ -54,6 +54,8 @@ class Particle{
 
 function Main(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#000000'
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     if(particles.length > 0){
         for(let point = 0; point < particles.length; point++){
