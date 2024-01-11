@@ -56,6 +56,19 @@ function distance(point1, point2){
     return d
 }
 
+function call_collision_check(){
+    for(p1 = 0; p1 < particles.length; p1++){
+        for(p2 = p1 + 1; p2 < particles.length; p2++){
+            pointA = particles[p1]
+            pointB = particles[p2]
+            let d = distance(pointA, pointB)
+            if(d < pointA.radius + pointB.radius){
+                collide(pointA, pointB, d)
+            }
+        }
+    }
+}   
+
 function Main(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#000000'
