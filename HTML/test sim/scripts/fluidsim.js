@@ -1,14 +1,18 @@
 const canvas = document.getElementById("Workspace");
 const ctx = canvas.getContext("2d");
 const dt = 0.1;
+let particles = [];
 
 class Particle{
-    constructor(position, velocity, radius, color){
+    constructor(position, velocity, acceleration, radius, color){
         this.position = position;
         this.velocity = velocity;
+        this.acceleration = acceleration;
 
         this.radius = radius;
         this.color = color;
+
+        particles.push(this);
     }
     draw_particle(){
         ctx.beginPath();
@@ -22,18 +26,28 @@ class Particle{
     update_motion(){
         this.position[0] += this.velocity[0] * dt;
         this.position[1] += this.velocity[1] * dt;
+        this.velocity[0] += this.acceleration[0] * dt;
+        this.velocity[1] += this.acceleration[1] * dt;
+
     }
 }
 
-let point1 = new Particle([50, 50], [10, 10], 10, '#FFFFFF');
-point1.draw_particle();
-
 function Main(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    point1.draw_particle();
-    point1.update_motion();
+
+    if(particles.length > 0){
+        for(let point=0; point<particles.length; point++){
+            particles[point].draw_particle();
+            particles[point].update_motion();
+    }}
+
 
     requestAnimationFrame(Main);
+
 }
 
-Main();
+new Particle([100, 100], [0, 0], [0, 0], 10, '#FFFFFF')
+new Particle([200, 200], [0, 0], [0, 0], 10, '#FFFFFF')
+
+Main()
+
