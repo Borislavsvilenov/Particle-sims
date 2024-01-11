@@ -30,27 +30,26 @@ class Particle{
         this.velocity[1] += this.acceleration[1] * dt;
 
     }
-    bounds(){
-        if(this.position[0] < this.radius){
-            this.position[0] = this.radius;
-            this.velocity[0] = Math.abs(this.velocity[0] * bounciness);
-        }
-        if(this.position[1] < this.radius){
-            this.position[1] = this.radius;
-            this.velocity[1] = Math.abs(this.velocity[1] * bounciness);
-        }
-        if(this.position[0] > width - this.radius){
-            this.position[0] = width - this.radius;
-            this.velocity[0] = - Math.abs(this.velocity[0] * bounciness);
-        }
-        if(this.position[1] > height - this.radius){
-            this.position[1] = height - this.radius;
-            this.velocity[1] = - Math.abs(this.velocity[1] * bounciness);
-        }
-    }
 }
 
-
+function bounds(point){
+    if(point.position[0] < point.radius){
+        point.position[0] = point.radius;
+        point.velocity[0] = Math.abs(point.velocity[0] * bounciness);
+    }
+    if(point.position[1] < point.radius){
+        point.position[1] = point.radius;
+        point.velocity[1] = Math.abs(point.velocity[1] * bounciness);
+    }
+    if(point.position[0] > width - point.radius){
+        point.position[0] = width - point.radius;
+        point.velocity[0] = - Math.abs(point.velocity[0] * bounciness);
+    }
+    if(point.position[1] > height - point.radius){
+        point.position[1] = height - point.radius;
+        point.velocity[1] = - Math.abs(point.velocity[1] * bounciness);
+    }
+}
 
 function Main(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -61,7 +60,7 @@ function Main(){
         for(let point = 0; point < particles.length; point++){
             particles[point].draw_particle();
             particles[point].update_motion();
-            particles[point].bounds();
+            bounds(particles[point])
     }}
 
 
