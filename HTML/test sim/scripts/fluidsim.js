@@ -32,23 +32,28 @@ class Particle{
     }
 }
 
-function bounds(point){
-    if(point.position[0] < point.radius){
-        point.position[0] = point.radius;
-        point.velocity[0] = Math.abs(point.velocity[0] * bounciness);
+function bounds(thing){
+    if(thing.position[0] < thing.radius){
+        thing.position[0] = thing.radius;
+        thing.velocity[0] = Math.abs(thing.velocity[0] * bounciness);
     }
-    if(point.position[1] < point.radius){
-        point.position[1] = point.radius;
-        point.velocity[1] = Math.abs(point.velocity[1] * bounciness);
+    if(thing.position[1] < thing.radius){
+        thing.position[1] = thing.radius;
+        thing.velocity[1] = Math.abs(thing.velocity[1] * bounciness);
     }
-    if(point.position[0] > width - point.radius){
-        point.position[0] = width - point.radius;
-        point.velocity[0] = - Math.abs(point.velocity[0] * bounciness);
+    if(thing.position[0] > width - thing.radius){
+        thing.position[0] = width - thing.radius;
+        thing.velocity[0] = - Math.abs(thing.velocity[0] * bounciness);
     }
-    if(point.position[1] > height - point.radius){
-        point.position[1] = height - point.radius;
-        point.velocity[1] = - Math.abs(point.velocity[1] * bounciness);
+    if(thing.position[1] > height - thing.radius){
+        thing.position[1] = height - thing.radius;
+        thing.velocity[1] = - Math.abs(thing.velocity[1] * bounciness);
     }
+}
+
+function distance(point1, point2){
+    let d = Math.sqrt(((point1.position[0] - point2.position[0]) ** 2) + ((point1.position[1] - point2.position[1]) ** 2))
+    return d
 }
 
 function Main(){
