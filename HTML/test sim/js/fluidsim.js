@@ -1,10 +1,15 @@
 const canvas = document.getElementById("Workspace");
+const fps_display = document.getElementById("FPS");
+const particle_count = document.getElementById("particle_count");
 const ctx = canvas.getContext("2d");
 const dt = 0.1;
 const width = canvas.width;
 const height = canvas.height;
 let particles = [];
 let bounciness = 0.9;
+let tot_particles = 0;
+let frameCounter = 0;
+
 
 class Vector2D{
     constructor(x, y){
@@ -21,13 +26,13 @@ class Vector2D{
         return new Vector2D(this.x * scaler, this.y * scaler);
     }
     dot(secondVec){
-        return new Vector2D(this.x * secondVec.x) + (this.y * secondVec.y);
+        return (this.x * secondVec.x) + (this.y * secondVec.y);
     }
     mag(){
         return Math.hypot(this.x, this.y);
     }
     norm(){
-        return new Vector2D(this.scale(1 / this.mag()));
+        return this.scale(1 / this.mag());
     }
 }
 
@@ -42,6 +47,9 @@ class Particle{
         this.color = color;
 
         particles.push(this);
+        tot_particles++
+        particle_count.textContent = tot_particles
+        
     }
     draw_particle(){
         ctx.fillStyle = this.color;
@@ -84,11 +92,11 @@ function collide(A, B, d){
     let velocity_norm = A.velocity.sub(B.velocity).dot(collision_norm);
     let mass = A.mass + B.mass;
 
-    A.position = A.position.add(collision_norm * overlap);
-    B.position = B.position.sub(collision_norm * overlap);
+    A.position = A.position.add(collision_norm.scale(overlap));
+    B.position = B.position.sub(collision_norm.scale(overlap));
 
-    A.velocity = A.velocity.sub(2 * (B.mass / mass) * velocity_norm * collision_norm * bounciness);
-    B.velocity = B.velocity.add(2 * (A.mass / mass) * velocity_norm * collision_norm * bounciness);
+    A.velocity = A.velocity.sub(collision_norm.scale(velocity_norm * bounciness * 2 * (B.mass / mass)));
+    B.velocity = B.velocity.add(collision_norm.scale(velocity_norm * bounciness * 2 * (A.mass / mass)));
 }
 
 function call_collision_check(){
@@ -102,7 +110,7 @@ function call_collision_check(){
             }
         }
     }
-}   
+} 
 
 function Main(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -119,22 +127,14 @@ function Main(){
 
     requestAnimationFrame(Main);
 
+    if(frameCounter % 10 === 0){
+        new Particle(new Vector2D(100, 100),
+                     new Vector2D(20, 0),
+                     new Vector2D(0, 1),
+                     10, 10, '#FFFFFF');
+    }
+    frameCounter++
 }
-
-new Particle(new Vector2D(100, 100),
-             new Vector2D(0, 0),
-             new Vector2D(0, 1),
-             10, 10, '#FFFFFF');
-
-new Particle(new Vector2D(200, 200),
-             new Vector2D(0, 0),
-             new Vector2D(0, 1),
-             10, 10, '#FFFFFF');
-
-new Particle(new Vector2D(300, 300),
-             new Vector2D(10, 0),
-             new Vector2D(0, 1),
-             10, 10, '#FFFFFF');
 
 Main();
 
