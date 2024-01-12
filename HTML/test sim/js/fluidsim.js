@@ -2,14 +2,15 @@ const canvas = document.getElementById("Workspace");
 const fps_display = document.getElementById("FPS");
 const particle_count = document.getElementById("particle_count");
 const ctx = canvas.getContext("2d");
-const dt = 0.1;
+let dt = 0.1;
 const width = canvas.width;
 const height = canvas.height;
 let particles = [];
 let bounciness = 0.9;
 let tot_particles = 0;
 let frameCounter = 0;
-let substeps = 3;
+let substeps = 2;
+let min_velocity = 0.01;
 
 
 class Vector2D{
@@ -60,7 +61,12 @@ class Particle{
     }
     update_motion(){
         this.position = this.position.add(this.velocity.scale(dt))
-        this.velocity = this.velocity.add(this.acceleration.scale(dt))
+        if(Math.abs(this.velocity.x) > min_velocity || Math.abs(this.velocity.y) > min_velocity){
+            this.velocity = this.velocity.add(this.acceleration.scale(dt))
+            return;
+        }
+        this.velocity.x = 0
+        this.velocity.y = 0
     }
 }
 
@@ -130,7 +136,7 @@ function Main(){
 
     requestAnimationFrame(Main);
 
-    if(frameCounter % 10 === 0){
+    if(frameCounter % (1/dt) === 0){
         new Particle(new Vector2D(100, 100),
                      new Vector2D(20, 0),
                      new Vector2D(0, 1),
