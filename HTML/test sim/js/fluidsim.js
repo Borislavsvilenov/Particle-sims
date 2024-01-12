@@ -6,11 +6,11 @@ let dt = 0.1;
 const width = canvas.width;
 const height = canvas.height;
 let particles = [];
-let bounciness = 0.9;
+let bounciness = 0.5;
 let tot_particles = 0;
 let frameCounter = 0;
-let substeps = 2;
-let min_velocity = 0.01;
+let substeps = 3;
+let min_velocity = 0.1;
 
 
 class Vector2D{
@@ -137,8 +137,8 @@ function Main(){
     requestAnimationFrame(Main);
 
     if(frameCounter % (1/dt) === 0){
-        new Particle(new Vector2D(100, 100),
-                     new Vector2D(20, 0),
+        new Particle(new Vector2D(100, 500),
+                     new Vector2D(40, 0),
                      new Vector2D(0, 1),
                      10, 10, '#FFFFFF');
     }
