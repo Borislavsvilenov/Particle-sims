@@ -11,6 +11,17 @@ let tot_particles = 0;
 let frameCounter = 0;
 let substeps = 2;
 let min_velocity = 0.01;
+let gridSize = 10;
+let gridMax = width/gridSize;
+let particlesInGrid = [];
+
+for(let i = 0; i < gridMax; i++){
+    particlesInGrid.push([]);
+    for(let k = 0; k < gridMax; k++){
+    particlesInGrid[i].push([]);
+    }
+}
+
 
 
 class Vector2D{
@@ -89,6 +100,14 @@ function bounds(thing){
     }
 }
 
+function initGrid(){
+    for(point=0; point<particles.length; point++){
+        let pos = particles[point].position;
+        let gridPos = pos.scale(1/gridSize);
+        particlesInGrid[Math.round(gridPos.x)].push(particles[point]);
+    }
+}
+
 function distance(point1, point2){
     return Math.hypot((point1.position.x - point2.position.x), (point1.position.y - point2.position.y));
 }
@@ -125,6 +144,8 @@ function Main(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    initGrid()
 
     if(particles.length > 0){
         for(let point = 0; point < particles.length; point++){
