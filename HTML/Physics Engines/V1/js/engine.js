@@ -1,5 +1,6 @@
 let dt = 0.1;
 let particles = [];
+let totParticles = 0;
 
 
 class Vector2D{
@@ -26,19 +27,21 @@ class Vector2D{
         return this.scale(1 / this.mag());
     }
 }
-
 class ParticleRound{
     constructor(position, velocity, force, mass, radius, color){
         this.shape = "round";
 
         this.position = position;
         this.velocity = velocity;
-        this.acceleration;
+        this.acceleration = new Vector2D(0,0);
         this.force = force;
         this.mass = mass;
 
         this.radius = radius;
         this.color = color;
+
+        particles.push(this);
+        totParticles++
 
         return this;
     }
@@ -77,7 +80,12 @@ class ParticleRound{
 }
 
 function Main(){
+    clearScreen();
+
     for(let particle = 0; particle < particles.length; particle++){
-        particle.update();
+        particles[particle].update();
+        particles[particle].draw_particle();
+
+    requestAnimationFrame(Main);
     }
 }

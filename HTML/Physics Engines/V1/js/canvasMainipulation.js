@@ -4,5 +4,7 @@ const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
 let canvasColor = "#000000";
 
-ctx.fillStyle = canvasColor;
-ctx.fillRect(0, 0, canvasWidth, canvasHeight)
+function clearScreen(){
+    ctx.fillStyle = canvasColor;
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight)
+}
