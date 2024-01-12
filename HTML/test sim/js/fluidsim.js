@@ -9,6 +9,7 @@ let particles = [];
 let bounciness = 0.9;
 let tot_particles = 0;
 let frameCounter = 0;
+let substeps = 3;
 
 
 class Vector2D{
@@ -100,13 +101,15 @@ function collide(A, B, d){
 }
 
 function call_collision_check(){
-    for(let p1 = 0; p1 < particles.length; p1++){
-        for(let p2 = p1 + 1; p2 < particles.length; p2++){
-            let pointA = particles[p1];
-            let pointB = particles[p2];
-            let d = distance(pointA, pointB);
-            if(d < pointA.radius + pointB.radius){
-                collide(pointA, pointB, d);
+    for(let steps=0; steps<substeps; steps++){
+        for(let p1 = 0; p1 < particles.length; p1++){
+            for(let p2 = p1 + 1; p2 < particles.length; p2++){
+                let pointA = particles[p1];
+                let pointB = particles[p2];
+                let d = distance(pointA, pointB);
+                if(d < pointA.radius + pointB.radius){
+                    collide(pointA, pointB, d);
+                }
             }
         }
     }
