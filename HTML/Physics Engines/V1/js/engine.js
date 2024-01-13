@@ -1,8 +1,6 @@
 let dt = 0.1;
 let particles = [];
 let totParticles = 0;
-
-
 class Vector2D{
     constructor(x, y){
         this.x = x;
@@ -69,6 +67,25 @@ class ParticleRound{
         return;
     }
 
+    bounds(){
+        if(this.position.x < this.radius){
+            this.position.x = this.radius;
+            this.velocity.x = Math.abs(this.velocity.x * bounciness);
+        }
+        if(this.position.y < this.radius){
+            this.position.y = this.radius;
+            this.velocity.y = Math.abs(this.velocity.y * bounciness);
+        }
+        if(this.position.x > canvasWidth - this.radius){
+            this.position.x = width - this.radius;
+            this.velocity.x = - Math.abs(this.velocity.x * bounciness);
+        }
+        if(this.position.y > canvasHeight - this.radius){
+            this.position.y = height - this.radius;
+            this.velocity.y = - Math.abs(this.velocity.y * bounciness);
+        }
+    }
+
     draw_particle(){
         ctx.fillStyle = this.color;
         ctx.beginPath();
@@ -83,6 +100,7 @@ function Main(){
     clearScreen();
 
     for(let particle = 0; particle < particles.length; particle++){
+        particles[particle].bounds();
         particles[particle].update();
         particles[particle].draw_particle();
 
