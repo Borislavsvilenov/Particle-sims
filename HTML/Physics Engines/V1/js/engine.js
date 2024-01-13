@@ -52,6 +52,14 @@ class ParticleRound{
         return;
     }
 
+    distanceTo(p2){
+        let dx = this.position.x - p2.position.x;
+        let dy = this.position.y - p2.position.y;
+        let d = Math.sqrt((dx**2) + (dy**2));
+
+        return d;
+    }
+
     collide(p2, d){
         let overlap = this.radius + p2.radius - d;
         let collisionNorm = this.position.sub(p2.position).norm();
