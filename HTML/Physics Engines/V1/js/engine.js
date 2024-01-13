@@ -1,6 +1,8 @@
 let dt = 0.1;
 let particles = [];
 let totParticles = 0;
+let substeps = 1;
+let bounciness = 1;
 class Vector2D{
     constructor(x, y){
         this.x = x;
@@ -52,6 +54,18 @@ class ParticleRound{
         return;
     }
 
+    callCollisonCheck(p1idx){
+        for(let p2idx = p1idx; p2idx < particles.length; p2idx++){
+            let p2 = particles[p2idx];
+            if(this != p2){
+                let d = this.distanceTo(p2);
+                if(d < this.radius + p2.radius){
+                    this.collideWith(p2, d);
+                }
+            }
+        }
+    }
+
     distanceTo(p2){
         let dx = this.position.x - p2.position.x;
         let dy = this.position.y - p2.position.y;
@@ -60,7 +74,7 @@ class ParticleRound{
         return d;
     }
 
-    collide(p2, d){
+    collideWith(p2, d){
         let overlap = this.radius + p2.radius - d;
         let collisionNorm = this.position.sub(p2.position).norm();
         let velocityNorm = this.velocity.sub(p2.velocity).dot(collisionNorm);
@@ -69,8 +83,8 @@ class ParticleRound{
         this.position = this.position.add(collisionNorm.scale(overlap));
         p2.position = p2.position.sub(collisionNorm.scale(overlap));
 
-        this.velocity = this.velocity.sub(collisionNorm.scale(velocityNorm * bounciness * p2.mass / mass));
-        p2.velocity = p2.velocity.add(collisionNorm.scale(velocityNorm * bounciness * this.mass / mass));
+        this.velocity = this.velocity.sub(collisionNorm.scale(velocityNorm * bounciness * 2 * (p2.mass / mass)));
+        p2.velocity = p2.velocity.add(collisionNorm.scale(velocityNorm * bounciness * 2 * (this.mass / mass)));
 
         return;
     }
@@ -85,11 +99,11 @@ class ParticleRound{
             this.velocity.y = Math.abs(this.velocity.y * bounciness);
         }
         if(this.position.x > canvasWidth - this.radius){
-            this.position.x = width - this.radius;
+            this.position.x = canvasWidth - this.radius;
             this.velocity.x = - Math.abs(this.velocity.x * bounciness);
         }
         if(this.position.y > canvasHeight - this.radius){
-            this.position.y = height - this.radius;
+            this.position.y = canvasHeight - this.radius;
             this.velocity.y = - Math.abs(this.velocity.y * bounciness);
         }
     }
@@ -106,12 +120,14 @@ class ParticleRound{
 
 function Main(){
     clearScreen();
-
-    for(let particle = 0; particle < particles.length; particle++){
-        particles[particle].bounds();
-        particles[particle].update();
-        particles[particle].draw_particle();
+    for(let step = 0; step < substeps; step++){
+        for(let particle = 0; particle < particles.length; particle++){
+            particles[particle].update();
+            particles[particle].callCollisonCheck(particle);
+            particles[particle].bounds();
+            particles[particle].draw_particle();
+        }
+    }
 
     requestAnimationFrame(Main);
-    }
 }
