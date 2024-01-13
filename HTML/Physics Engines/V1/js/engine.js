@@ -1,8 +1,11 @@
 let dt = 0.1;
 let particles = [];
 let totParticles = 0;
-let substeps = 1;
-let bounciness = 1;
+let substeps = 6;
+let bounciness = 0.9;
+let frameCounter = 0;
+let minVelocity = 0.001;
+let spawnParticles = true;
 class Vector2D{
     constructor(x, y){
         this.x = x;
@@ -50,17 +53,23 @@ class ParticleRound{
         this.position = this.position.add(this.velocity.scale(dt));
         this.velocity = this.velocity.add(this.acceleration.scale(dt));
         this.acceleration = this.force.scale(1/this.mass);
+        if(this.velocity.x <= minVelocity && this.velocity.y <= minVelocity){
+            this.velocity.x = 0;
+            this.velocity.y = 0;
+        }
 
         return;
     }
 
     callCollisonCheck(p1idx){
-        for(let p2idx = p1idx; p2idx < particles.length; p2idx++){
-            let p2 = particles[p2idx];
-            if(this != p2){
-                let d = this.distanceTo(p2);
-                if(d < this.radius + p2.radius){
-                    this.collideWith(p2, d);
+        for(let step = 0; step < substeps; step++){
+            for(let p2idx = p1idx; p2idx < particles.length; p2idx++){
+                let p2 = particles[p2idx];
+                if(this != p2){
+                    let d = this.distanceTo(p2);
+                    if(d < this.radius + p2.radius){
+                        this.collideWith(p2, d);
+                    }
                 }
             }
         }
@@ -120,12 +129,18 @@ class ParticleRound{
 
 function Main(){
     clearScreen();
-    for(let step = 0; step < substeps; step++){
-        for(let particle = 0; particle < particles.length; particle++){
-            particles[particle].update();
-            particles[particle].callCollisonCheck(particle);
-            particles[particle].bounds();
-            particles[particle].draw_particle();
+    for(let particle = 0; particle < particles.length; particle++){
+        particles[particle].update();
+        particles[particle].callCollisonCheck(particle);
+        particles[particle].bounds();
+        particles[particle].draw_particle();
+    }
+    if(spawnParticles){
+        if(frameCounter % 30 === 0){
+            new ParticleRound(new Vector2D(400,100),
+                        new Vector2D(1,10),
+                        new Vector2D(0,10),
+                        10, 10, "#FFFFFF");
         }
     }
 
