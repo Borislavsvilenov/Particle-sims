@@ -30,7 +30,7 @@ class ParticleRound{
         this.position = this.position.add(this.velocity.scale(dt));
         this.velocity = this.velocity.add(this.acceleration.scale(dt));
         this.acceleration = this.force.scale(1/this.mass);
-        if(this.velocity.x <= minVelocity && this.velocity.y <= minVelocity){
+        if(Math.abs(this.velocity.x) <= minVelocity && Math.abs(this.velocity.y) <= minVelocity){
             this.velocity.x = 0;
             this.velocity.y = 0;
         }
@@ -39,11 +39,17 @@ class ParticleRound{
     }
 
     bounds(){
-        if(Math.abs(this.position.x) >= width/2){
-            this.velocity.x *= -1 
+        if(this.position.x >= (width/2) - this.radius){
+            this.velocity.x = - Math.abs(this.velocity.x) * bounciness
         }
-        if(Math.abs(this.position.y) >= height/2){
-            this.velocity.y *= -1 
+        if(this.position.x <= this.radius - (width/2)){
+            this.velocity.x = Math.abs(this.velocity.x) * bounciness
+        }
+        if(this.position.y >= (height/2) - this.radius){
+            this.velocity.y = - Math.abs(this.velocity.y) * bounciness
+        }
+        if(this.position.y <= this.radius - (height/2)){
+            this.velocity.y = Math.abs(this.velocity.y) * bounciness
         }
 
         return;
@@ -83,7 +89,7 @@ class ParticleRect{
         this.position = this.position.add(this.velocity.scale(dt));
         this.velocity = this.velocity.add(this.acceleration.scale(dt));
         this.acceleration = this.force.scale(1/this.mass);
-        if(this.velocity.x <= minVelocity && this.velocity.y <= minVelocity){
+        if(Math.abs(this.velocity.x) <= minVelocity && Math.abs(this.velocity.y) <= minVelocity){
             this.velocity.x = 0;
             this.velocity.y = 0;
         }
@@ -92,11 +98,17 @@ class ParticleRect{
     }
 
     bounds(){
-        if(Math.abs(this.position.x) >= width/2){
-            this.velocity.x *= -1 
+        if(this.position.x >= width/2 - this.size){
+            this.velocity.x = - Math.abs(this.velocity.x) * bounciness
         }
-        if(Math.abs(this.position.y) >= height/2){
-            this.velocity.y *= -1 
+        if(this.position.x <= this.size - width/2){
+            this.velocity.x = Math.abs(this.velocity.x) * bounciness
+        }
+        if(this.position.y >= height/2 - this.size){
+            this.velocity.y = - Math.abs(this.velocity.y) * bounciness
+        }
+        if(this.position.y <= this.size - height/2){
+            this.velocity.y = Math.abs(this.velocity.y) * bounciness
         }
 
         return;

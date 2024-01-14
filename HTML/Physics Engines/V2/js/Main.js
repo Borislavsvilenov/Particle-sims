@@ -10,6 +10,7 @@ function Main(){
     requestAnimationFrame(Main);
 }
 
-new ParticleRound(new Vector2D(100, 100), new Vector2D(0, 0), new Vector2D(0, 0), 10, 20, "#FFFFFF")
+new ParticleRound(new Vector2D(100, 100), new Vector2D(10,0), new Vector2D(0, 10), 10, 20, "#FFFFFF")
+new ParticleRect(new Vector2D(-100, 100), new Vector2D(10,0), new Vector2D(0, 10), 10, 20, "#FFFFFF")
 
 Main();
