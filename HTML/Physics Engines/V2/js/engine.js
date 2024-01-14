@@ -101,13 +101,13 @@ class ParticleRect{
         if(this.position.x >= width/2 - this.size){
             this.velocity.x = - Math.abs(this.velocity.x) * bounciness
         }
-        if(this.position.x <= this.size - width/2){
+        if(this.position.x <= - width/2){
             this.velocity.x = Math.abs(this.velocity.x) * bounciness
         }
         if(this.position.y >= height/2 - this.size){
             this.velocity.y = - Math.abs(this.velocity.y) * bounciness
         }
-        if(this.position.y <= this.size - height/2){
+        if(this.position.y <= - height/2){
             this.velocity.y = Math.abs(this.velocity.y) * bounciness
         }
 

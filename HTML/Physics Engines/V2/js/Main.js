@@ -6,6 +6,7 @@ function Main(){
         particles[particle].update();
         particles[particle].bounds();
     }
+    
 
     requestAnimationFrame(Main);
 }
