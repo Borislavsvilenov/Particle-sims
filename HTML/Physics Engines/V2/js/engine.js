@@ -38,10 +38,19 @@ class ParticleRound{
         return;
     }
 
+    bounds(){
+        if(Math.abs(this.position.x) >= width/2){
+            this.velocity.x *= -1 
+        }
+        if(Math.abs(this.position.y) >= height/2){
+            this.velocity.y *= -1 
+        }
 
+        return;
+    }
 
-    draw_particle(){
-        let position = calculateScreenPosition(this);
+    drawParticle(){
+        let position = calculateScreenPosition(this.position);
         ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(position.x, position.y, this.radius, 2 * Math.PI, false);
@@ -82,12 +91,22 @@ class ParticleRect{
         return;
     }
 
-    draw_particle(){
-        let position = calculateScreenPosition(this);
+    bounds(){
+        if(Math.abs(this.position.x) >= width/2){
+            this.velocity.x *= -1 
+        }
+        if(Math.abs(this.position.y) >= height/2){
+            this.velocity.y *= -1 
+        }
+
+        return;
+    }
+
+    drawParticle(){
+        let position = calculateScreenPosition(this.position);
         ctx.fillStyle = this.color;
         ctx.fillRect(position.x, position.y, this.size, this.size);
 
         return;
     }
-
 }
