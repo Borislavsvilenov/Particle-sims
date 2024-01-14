@@ -5,8 +5,8 @@ const canvasHeight = canvas.height;
 const canvasCenterX = canvasWidth/2;
 const canvasCenterY = canvasHeight/2;
 const canvasCenter = new Vector2D(canvasCenterX, canvasCenterY);
-let width = 400;
-let height = 400;
+let width = 600;
+let height = 600;
 let centeredOn = new Vector2D(0, 0);
 let canvasColor = "#000000";
 

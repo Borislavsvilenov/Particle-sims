@@ -55,6 +55,8 @@ class ParticleRound{
         return;
     }
 
+    
+
     drawParticle(){
         let position = calculateScreenPosition(this.position);
         ctx.fillStyle = this.color;
