@@ -1,14 +1,14 @@
 let dt = 0.1;
 let particles = [];
 let totParticles = 0;
-let substeps = 6;
+let substeps = 8;
 let bounciness = 0.9;
 let frameCounter = 0;
 let minVelocity = 0.001;
 let spawnParticles = true;
 
 class ParticleRound{
-    constructor(position, velocity, force, mass, radius, color){
+    constructor(position, velocity, force, mass, radius, color, gravity){
         this.shape = "round";
 
         this.position = position;
@@ -19,6 +19,9 @@ class ParticleRound{
 
         this.radius = radius;
         this.color = color;
+        this.gravity = gravity;
+
+        this.experienceGravity = true;
 
         particles.push(this);
         totParticles++
@@ -30,6 +33,11 @@ class ParticleRound{
         this.position = this.position.add(this.velocity.scale(dt));
         this.velocity = this.velocity.add(this.acceleration.scale(dt));
         this.acceleration = this.force.scale(1/this.mass);
+        if(this.experienceGravity == true){
+            if(this.gravity == "down"){
+                this.force.y = 10;
+            }
+        }
         if(Math.abs(this.velocity.x) <= minVelocity && Math.abs(this.velocity.y) <= minVelocity){
             this.velocity.x = 0;
             this.velocity.y = 0;
@@ -66,6 +74,7 @@ class ParticleRound{
         let totMass = this.mass + p2.mass;
 
 
+
         this.position = this.position.add(collisionNorm.scale(overlap));
         p2.position = p2.position.sub(collisionNorm.scale(overlap));
         
@@ -76,13 +85,15 @@ class ParticleRound{
     }
 
     callCollision(p1idx){
-        for(let p2idx = p1idx; p2idx < particles.length; p2idx++){
-            let p2 = particles[p2idx];
-            if(this != p2){
-                if(p2.shape == "round"){
-                    let d = this.distanceTo(p2);
-                    if(d <= this.radius + p2.radius){
-                        this.collideRound(p2, d);
+        for(let step = 0; step < substeps; step++){
+            for(let p2idx = p1idx; p2idx < particles.length; p2idx++){
+                let p2 = particles[p2idx];
+                if(this != p2){
+                    if(p2.shape == "round"){
+                        let d = this.distanceTo(p2);
+                        if(d <= this.radius + p2.radius){
+                            this.collideRound(p2, d);
+                        }
                     }
                 }
             }
@@ -109,7 +120,7 @@ class ParticleRound{
 }
 
 class ParticleRect{
-    constructor(position, velocity, force, mass, size, color){
+    constructor(position, velocity, force, mass, size, color, gravity){
         this.shape = "rect";
 
         this.position = position;
@@ -120,6 +131,9 @@ class ParticleRect{
 
         this.size = size;
         this.color = color;
+        this.gravity = gravity;
+
+        this.experienceGravity = true;
 
         particles.push(this);
         totParticles++
