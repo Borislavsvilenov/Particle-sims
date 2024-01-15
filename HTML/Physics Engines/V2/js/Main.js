@@ -9,7 +9,7 @@ function Main(){
         particles[particle].experienceGravity = true;
     }
     if(frameCounter % 10 === 0){
-        new ParticleRound(new Vector2D(100, 100), new Vector2D(10,0), new Vector2D(0, 10), 10, 10, "#FFFFFF", "down");
+        new ParticleRound(new Vector2D(0, -50), new Vector2D(10, 0), new Vector2D(0, 10), 10, 10, "#FFFFFF", "down");
     }
 
     frameCounter++
