@@ -9,11 +9,11 @@ function Main(){
         particles[particle].experienceGravity = true;
     }
     if(spawnParticles){
-        if(frameCounter % 10 === 0){
+        if(frameCounter % 1 === 0){
             new ParticleRound(new Vector2D(0, -50), new Vector2D(-3, -50), new Vector2D(0, 10), 10, 10, "#FFFFFF", "down");
         }
     }
-    
+
     screenBounds();
     moveCam();
 
