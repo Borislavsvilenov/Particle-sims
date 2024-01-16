@@ -8,12 +8,13 @@ let minVelocity = 0.001;
 let spawnParticles = true;
 
 class ParticleRound{
-    constructor(position, velocity, force, mass, radius, color, gravity){
+    constructor(position, positionLast, force, mass, radius, color, gravity){
         this.shape = "round";
 
         this.position = position;
-        this.velocity = velocity;
-        this.acceleration = new Vector2D(0,0);
+        this.positionLast = positionLast;
+        this.velocity;
+        this.acceleration;
         this.force = force;
         this.mass = mass;
 
@@ -30,17 +31,15 @@ class ParticleRound{
     }
 
     update(){
-        this.position = this.position.add(this.velocity.scale(dt));
-        this.velocity = this.velocity.add(this.acceleration.scale(dt));
+        this.velocity = this.position.sub(this.positionLast);
         this.acceleration = this.force.scale(1/this.mass);
+        this.positionLast = this.position;
+        this.position = this.position.add(this.velocity).add(this.acceleration.scale(dt * dt));
+
         if(this.experienceGravity == true){
             if(this.gravity == "down"){
                 this.force.y = 10;
             }
-        }
-        if(Math.abs(this.velocity.x) <= minVelocity && Math.abs(this.velocity.y) <= minVelocity){
-            this.velocity.x = 0;
-            this.velocity.y = 0;
         }
 
         return;
@@ -48,19 +47,15 @@ class ParticleRound{
 
     bounds(){
         if(this.position.x >= (width/2) - this.radius){
-            this.velocity.x = - Math.abs(this.velocity.x) * bounciness;
             this.position.x = width/2 - this.radius;
         }
         if(this.position.x <= this.radius - (width/2)){
-            this.velocity.x = Math.abs(this.velocity.x) * bounciness;
             this.position.x = - width/2 + this.radius;
         }
         if(this.position.y >= (height/2) - this.radius){
-            this.velocity.y = - Math.abs(this.velocity.y) * bounciness;
             this.position.y = height/2 - this.radius;
         }
         if(this.position.y <= this.radius - (height/2)){
-            this.velocity.y = Math.abs(this.velocity.y) * bounciness;
             this.position.y = - height/2 + this.radius;
         }
 
@@ -68,18 +63,11 @@ class ParticleRound{
     }
 
     collideRound(p2, d){
-        let overlap = this.radius + p2.radius - d;
+        let overlap = (this.radius + p2.radius - d)/2;
         let collisionNorm = this.position.sub(p2.position).norm();
-        let velocitySFactor = this.velocity.sub(p2.velocity).dot(collisionNorm);
-        let totMass = this.mass + p2.mass;
-
-
 
         this.position = this.position.add(collisionNorm.scale(overlap));
         p2.position = p2.position.sub(collisionNorm.scale(overlap));
-        
-        this.velocity = this.velocity.sub(collisionNorm.scale(velocitySFactor * 2 * p2.mass / totMass));
-        p2.velocity = p2.velocity.add(collisionNorm.scale(velocitySFactor * 2 * this.mass / totMass));
 
         return;
     }
