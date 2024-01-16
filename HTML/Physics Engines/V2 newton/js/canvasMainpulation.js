@@ -20,6 +20,12 @@ function calculateScreenPosition(point){
     return screenPos;
 }
 
+function calculatePointPosition(pos){
+    let PointPos = pos.sub(canvasCenter).add(centeredOn);
+    return PointPos;
+}
+
+
 function centerOn(point){
     centeredOn = point.position;
 }

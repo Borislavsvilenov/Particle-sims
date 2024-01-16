@@ -29,3 +29,14 @@ document.onkeyup = function(pressed){
     }
 }
 
+canvas.addEventListener("mousemove", (pos) => {
+    mousePos = new Vector2D(pos.clientX, pos.clientY);
+});
+
+canvas.addEventListener("click", (pressed) => {
+    if(pressed.button == 0){
+        new ParticleRound(calculatePointPosition(mousePos), calculatePointPosition(mousePos), new Vector2D(0,0), 10, 10, "#FFFFFF", "down");
+    }
+});
+
+

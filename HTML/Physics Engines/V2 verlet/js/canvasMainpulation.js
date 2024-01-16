@@ -1,4 +1,3 @@
-const canvas = document.getElementById("simArea");
 const ctx = canvas.getContext("2d");
 const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
@@ -18,6 +17,11 @@ function clearScreen(){
 function calculateScreenPosition(point){
     let screenPos = point.add(canvasCenter).sub(centeredOn);
     return screenPos;
+}
+
+function calculatePointPosition(pos){
+    let PointPos = pos.sub(canvasCenter).add(centeredOn);
+    return PointPos;
 }
 
 function centerOn(point){
