@@ -7,6 +7,7 @@ let frameCounter = 0;
 let minVelocity = 0.001;
 let spawnParticles = true;
 
+// needed to boil 1093
 class ParticleRound{
     constructor(position, positionLast, force, mass, radius, color, gravity){
         this.shape = "round";
