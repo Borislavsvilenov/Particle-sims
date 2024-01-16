@@ -24,6 +24,10 @@ function centerOn(point){
     centeredOn = point.position;
 }
 
+function moveCam(){
+    centeredOn = centeredOn.add(camV);
+}
+
 function screenBounds(){
     let origin1 = calculateScreenPosition(new Vector2D(- width/2, - height/2));
     let origin2 = calculateScreenPosition(new Vector2D(width/2, height/2));
