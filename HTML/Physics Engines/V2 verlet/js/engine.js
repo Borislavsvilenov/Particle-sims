@@ -37,14 +37,6 @@ class ParticleRound{
         this.positionLast = this.position;
         this.position = this.position.add(this.velocity).add(this.acceleration.scale(dt * dt));
 
-        if(this.experienceGravity == true){
-            if(this.gravity == "down"){
-                this.force.y = 10;
-            } else {
-                this.force = new Vector2D(0, 0)
-            }
-        }
-
         return;
     }
 
@@ -86,7 +78,12 @@ class ParticleRound{
                             let posNorm = this.position.sub(p2.position).norm();
                             this.force = this.force.add(posNorm.scale(grav * this.mass * p2.mass / d));
                             p2.force = p2.force.add(posNorm.scale(-1 * grav * this.mass * p2.mass / d));
+                        } else if (this.gravity == "down"){
+                            this.force.y = 10;
+                        } else {
+                            this.force = new Vector2D(0, 0)
                         }
+                        
                         if(d <= this.radius + p2.radius){
                             this.collideRound(p2, d);
                         }
