@@ -82,10 +82,10 @@ class ParticleRound{
                 if(this != p2){
                     if(p2.shape == "round"){
                         let d = this.distanceTo(p2);
-                        if(this.gravity == "OTO"){
+                        if(this.gravity == "OTO"){ 
                             let posNorm = this.position.sub(p2.position).norm();
-                            this.force = this.force.add(posNorm.scale(grav * this.mass * p2.mass / d))
-                            p2.force = p2.force.add(posNorm.scale(-1 * grav * this.mass * p2.mass / d))
+                            this.force = this.force.add(posNorm.scale(grav * this.mass * p2.mass / d));
+                            p2.force = p2.force.add(posNorm.scale(-1 * grav * this.mass * p2.mass / d));
                         }
                         if(d <= this.radius + p2.radius){
                             this.collideRound(p2, d);
