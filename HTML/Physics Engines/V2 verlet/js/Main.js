@@ -15,7 +15,12 @@ function Main(){
     }
 
     screenBounds();
-    moveCam();
+    if(centeredOnIndx == -1){
+        moveCam();
+    }
+    else {
+        centerOn(particles[centeredOnIndx]);
+    }
 
     frameCounter++
 

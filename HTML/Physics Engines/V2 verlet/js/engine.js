@@ -5,7 +5,6 @@ let substeps = 8;
 let bounciness = 0.9;
 let frameCounter = 0;
 let minVelocity = 0.001;
-let spawnParticles = true;
 
 // needed to boil 1093
 class ParticleRound{
