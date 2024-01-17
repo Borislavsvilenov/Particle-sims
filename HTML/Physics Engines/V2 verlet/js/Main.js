@@ -17,8 +17,7 @@ function Main(){
     screenBounds();
     if(centeredOnIndx == -1){
         moveCam();
-    }
-    else {
+    } else {
         centerOn(particles[centeredOnIndx]);
     }
 
