@@ -5,6 +5,7 @@ let substeps = 8;
 let bounciness = 0.9;
 let frameCounter = 0;
 let minVelocity = 0.001;
+let grav = 1;
 
 // needed to boil 1093
 class ParticleRound{
@@ -39,6 +40,8 @@ class ParticleRound{
         if(this.experienceGravity == true){
             if(this.gravity == "down"){
                 this.force.y = 10;
+            } else {
+                this.force = new Vector2D(0, 0)
             }
         }
 
@@ -79,6 +82,11 @@ class ParticleRound{
                 if(this != p2){
                     if(p2.shape == "round"){
                         let d = this.distanceTo(p2);
+                        if(this.gravity == "OTO"){
+                            let posNorm = this.position.sub(p2.position).norm();
+                            this.force = this.force.add(posNorm.scale(grav * this.mass * p2.mass / d))
+                            p2.force = p2.force.add(posNorm.scale(-1 * grav * this.mass * p2.mass / d))
+                        }
                         if(d <= this.radius + p2.radius){
                             this.collideRound(p2, d);
                         }

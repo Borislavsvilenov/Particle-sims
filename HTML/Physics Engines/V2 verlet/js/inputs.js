@@ -7,42 +7,35 @@ let spawnParticles = true;
 document.onkeydown = function(pressed){
     if(pressed.key == "ArrowRight"){
         camV.x = 10;
-    }
-    else if(pressed.key == "ArrowLeft"){
+    } else if(pressed.key == "ArrowLeft"){
         camV.x = -10;
     }
     if(pressed.key == "ArrowUp"){
         camV.y = -10;
-    }
-    else if(pressed.key == "ArrowDown"){
+    } else if(pressed.key == "ArrowDown"){
         camV.y = 10;
     }
 
     if(pressed.key == "1"){
         if(centeredOnIndx == -1){
             centeredOnIndx = particles.length - 1;
-        }
-        else {
+        } else {
             centeredOnIndx--;
         }
-    }
-    else if(pressed.key == "2"){
+    } else if(pressed.key == "2"){
         if(centeredOnIndx == particles.length - 1){
             centeredOnIndx = - 1;
-        }
-        else {
+        } else {
             centeredOnIndx++;
         }
-    }
-    else if(pressed.key == "3"){
+    } else if(pressed.key == "3"){
         centeredOnIndx = -1;
     }
 
     if(pressed.key == "s"){
         if(spawnParticles){
             spawnParticles = false;
-        }
-        else {
+        } else {
             spawnParticles = true;
         }
     }
@@ -50,14 +43,12 @@ document.onkeydown = function(pressed){
 document.onkeyup = function(pressed){
     if(pressed.key == "ArrowRight"){
         camV.x = 0;
-    }
-    else if(pressed.key == "ArrowLeft"){
+    } else if(pressed.key == "ArrowLeft"){
         camV.x = 0;
     }
     if(pressed.key == "ArrowUp"){
         camV.y = 0;
-    }
-    else if(pressed.key == "ArrowDown"){
+    } else if(pressed.key == "ArrowDown"){
         camV.y = 0;
     }
 }
