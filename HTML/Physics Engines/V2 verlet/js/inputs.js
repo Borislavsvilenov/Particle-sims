@@ -4,6 +4,7 @@ let mousePos;
 let mousePosLast = new Vector2D(0, 0);
 let centeredOnIndx = -1;
 let spawnParticles = false;
+let paused = true;
 
 document.onkeydown = function(pressed){
     if(pressed.key == "ArrowRight"){
@@ -43,6 +44,14 @@ document.onkeydown = function(pressed){
             spawnParticles = true;
         }
     }
+
+    if(pressed.key == " "){
+        if(paused){
+            paused = false;
+        } else {
+            paused = true;
+        }
+    }
 }
 document.onkeyup = function(pressed){
     if(pressed.key == "ArrowRight"){
@@ -66,7 +75,7 @@ canvas.addEventListener("mousedown", (pressed) => {
 });
 
 canvas.addEventListener("mouseup", (pressed) => {
-    let mouseNorm = mousePos.sub(mousePosLast).scale(1/50);
+    let mouseNorm = mousePos.sub(mousePosLast).scale(1/25);
     mousePosLast = mousePos.sub(mouseNorm);
 
     new ParticleRound(calculatePointPosition(mousePos), calculatePointPosition(mousePosLast), new Vector2D(0, 0), 10, 10, "#FFFFFF", "OTO");
