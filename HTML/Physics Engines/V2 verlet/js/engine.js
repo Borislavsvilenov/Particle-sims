@@ -1,7 +1,7 @@
 let dt = 0.1;
 let particles = [];
 let totParticles = 0;
-let substeps = 8;
+let substeps = 1;
 let bounciness = 0.9;
 let frameCounter = 0;
 let minVelocity = 0.001;
@@ -68,20 +68,24 @@ class ParticleRound{
     }
 
     callCollision(p1idx){
+        this.force = new Vector2D(0,0);
+
+        if(this.gravity == "down"){
+            this.force.y = 20;
+        }
+
         for(let step = 0; step < substeps; step++){
-            for(let p2idx = p1idx; p2idx < particles.length; p2idx++){
+            for(let p2idx = 0; p2idx < particles.length; p2idx++){
                 let p2 = particles[p2idx];
                 if(this != p2){
                     if(p2.shape == "round"){
                         let d = this.distanceTo(p2);
-                        if(this.gravity == "OTO"){ 
-                            let posNorm = this.position.sub(p2.position).norm();
-                            this.force = this.force.add(posNorm.scale(grav * this.mass * p2.mass / d));
-                            p2.force = p2.force.add(posNorm.scale(-1 * grav * this.mass * p2.mass / d));
-                        } else if (this.gravity == "down"){
-                            this.force.y = 10;
-                        } else {
-                            this.force = new Vector2D(0, 0)
+                        if(step == 0){
+                            if(this.gravity == "OTO" && p2.gravity == "OTO"){ 
+                                let posNorm = this.position.sub(p2.position).norm();
+                                this.force = this.force.sub(posNorm.scale(grav * this.mass * p2.mass / d));
+                                p2.force = p2.force.add(posNorm.scale(grav * this.mass * p2.mass / d));
+                            }
                         }
                         
                         if(d <= this.radius + p2.radius){

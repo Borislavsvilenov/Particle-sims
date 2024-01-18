@@ -2,7 +2,7 @@ const canvas = document.getElementById("simArea");
 let camV = new Vector2D(0,0);
 let mousePos;
 let centeredOnIndx = -1;
-let spawnParticles = true;
+let spawnParticles = false;
 
 document.onkeydown = function(pressed){
     if(pressed.key == "ArrowRight"){
@@ -30,6 +30,9 @@ document.onkeydown = function(pressed){
         }
     } else if(pressed.key == "3"){
         centeredOnIndx = -1;
+    } else if(pressed.key == "4"){
+        centeredOnIndx = -1;
+        centeredOn = new Vector2D(0, 0);
     }
 
     if(pressed.key == "s"){
@@ -59,7 +62,7 @@ canvas.addEventListener("mousemove", (pos) => {
 
 canvas.addEventListener("click", (pressed) => {
     if(pressed.button == 0){
-        new ParticleRound(calculatePointPosition(mousePos), calculatePointPosition(mousePos), new Vector2D(0,0), 10, 10, "#FFFFFF", "down");
+        new ParticleRound(calculatePointPosition(mousePos), calculatePointPosition(mousePos), new Vector2D(0, 0), 10, 10, "#FFFFFF", "down");
     }
 });
 
