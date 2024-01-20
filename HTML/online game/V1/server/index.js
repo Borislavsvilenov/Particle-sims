@@ -8,7 +8,6 @@ let particles = [];
 let paused = true;
 
 io.on('connection', (socket) => {
-    console.log('A client connected');
     io.emit('updateList', particles);
     io.emit('pause', paused);
 
@@ -17,8 +16,6 @@ io.on('connection', (socket) => {
         if (newParticles.length > particles.length) {
             particles = newParticles;
         }
-
-        console.log('Updated particles:', particles);
 
         io.emit('updateList', particles);
     });
