@@ -1,8 +1,14 @@
 const particleCounter = document.getElementById("particleCount");
+const displayPause = document.getElementById("pause");
 
 function Main(){
     clearScreen();
     particleCounter.textContent = particles.length;
+    if(paused){
+        displayPause.textContent = "PAUSED!!!";
+    } else {
+        displayPause.textContent = " ";
+    }
 
     if(centeredOnIndx == -1){
         moveCam();
