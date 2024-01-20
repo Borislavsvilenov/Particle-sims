@@ -50,7 +50,7 @@ class Particle{
 
         particles.push(this);
         tot_particles++
-        particle_count.textContent = tot_particles
+        particle_count.textContent = tot_particles;
         
     }
     draw_particle(){
