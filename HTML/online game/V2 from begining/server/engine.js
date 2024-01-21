@@ -2,6 +2,9 @@ const vec2 = require('./Vector2D');
 let particles = [];
 let width = 1000;
 let height = 1000;
+let dt = 0.1;
+let substeps = 1;
+let grav = 1;
 
 //Particle class
 class Particle {
@@ -25,7 +28,7 @@ class Particle {
         return this;
     };
 
-    bounds(){
+    bounds () {
         if(this.position.x >= (width/2) - this.radius){
             this.position.x = width/2 - this.radius;
         }
@@ -49,14 +52,14 @@ class Particle {
 
         this.positionLast = this.position; //update last position
 
-        this.position = this.velocity.add(this.acceleration.scale(dt * dt)); //callculate new position using verlet integarion
+        this.position = this.position.add(this.velocity).add(this.acceleration.scale(dt * dt)); //callculate new position using verlet integarion
 
         this.force = new vec2(0, 0)
 
         return;
     };
 
-    collide(p2, d){
+    collide (p2, d) {
         //callculate over lap so the particles don't clip
         let overlap = (this.radius + p2.radius - d)/2;
         let collisionNorm = this.position.sub(p2.position).norm();
@@ -80,10 +83,10 @@ class Particle {
                 let p2 = particles[p2idx];
                 //if the particle we have and the particle that the loop is on are the same we skip
                 if (this != p2) {
-                    let d = this.sub(p2).mag();
+                    let d = this.position.sub(p2.position).mag();
                     //callculate the attractive force between objects
                     if (step == 0) {
-                        if(this.gravity == "OTO" && p2.gravity == "OTO"){ 
+                        if(this.gravType == "OTO" && p2.gravType == "OTO"){ 
                             let posNorm = this.position.sub(p2.position).norm();
                             this.force = this.force.sub(posNorm.scale(grav * this.mass * p2.mass / d));
                             p2.force = p2.force.add(posNorm.scale(grav * this.mass * p2.mass / d));
@@ -91,7 +94,7 @@ class Particle {
                     };
 
                     if (d <= this.radius + p2.radius) {
-                        collide(p2, d);
+                        this.collide(p2, d);
                     };
                 };
             };

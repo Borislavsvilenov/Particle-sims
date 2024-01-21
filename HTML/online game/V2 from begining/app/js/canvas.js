@@ -14,6 +14,7 @@ function clearScreen(){
 };
 
 function calculateScreenPosition(pos){
+    pos = new Vector2D(pos.x ,pos.y);
     let screenPos = pos.add(canvasCenter).sub(centeredOn);
     return screenPos;
 };
@@ -31,6 +32,14 @@ function screenBounds(){
     ctx.fillRect(origin1.x, origin1.y, -10, height);
     ctx.fillRect(origin2.x, origin2.y, -width, 10);
     ctx.fillRect(origin2.x, origin2.y, 10, -height);
+};
+
+function centerOn(point){
+    centeredOn = point.position;
+};
+
+function moveCam(){
+    centeredOn = centeredOn.add(camV);
 };
 
 function drawParticle (point) {
