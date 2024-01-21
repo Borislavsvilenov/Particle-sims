@@ -4,13 +4,13 @@ const particleDisplay = document.getElementById("ParticleDisplay");
 
 socket.on("update", particles => {
     clearScreen();
+    screenBounds();
 
     for (let p = 0; p < particles.length; p++){
         drawParticle(particles[p]);
     };
 
     moveCam();
-    screenBounds();
 
     particleDisplay.textContent = particles.length
 });

@@ -1,10 +1,9 @@
-//imports network modules
+// imports network modules
 const http = require('http').createServer();
-
 const io = require('socket.io')(http, {cors: { origin: "*" }});
-
-const {Particle, particles} = require("./engine"); //Main physics engine
-const vec2 = require("./Vector2D"); //vector funcs
+// import other modules
+const {Particle, particles} = require("./engine"); // Main physics engine
+const vec2 = require("./Vector2D"); // vector funcs
 
 let lastFrameTime = Date.now();
 let frameCount = 0;
@@ -27,12 +26,20 @@ function calculateFPS() {
     frameCount++;
 }; 
 
+function mkdictionary (list) {
+    let dictionary = [];
+    for (let i = 0; i < list.length; i++){
+        dictionary[i] = {position: list[i].position, color: list[i].color, radius: list[i].radius};
+    };
+    return dictionary;
+};
+
 io.on('connection', (socket) => {
 
-    let points = {};
-    io.emit("update", )
+    io.emit("update", mkdictionary(particles));
 
     socket.on('spwnParticle', spwnParticle => {
+        // make a new particle every time this event is called
         new Particle(new vec2(spwnParticle.position.x, spwnParticle.position.y), 
                      new vec2(spwnParticle.positionLast.x, spwnParticle.positionLast.y), 
                      new vec2(spwnParticle.force.x, spwnParticle.force.y), 
@@ -41,7 +48,8 @@ io.on('connection', (socket) => {
 });
 
 setInterval(() => {
-    io.emit("update", particles);
+    // main loop for updating particle position and for chcking collisions
+    io.emit("update", mkdictionary(particles));
     for (let p = 0; p < particles.length; p++) {
         particles[p].bounds();
         particles[p].checkCollision()
