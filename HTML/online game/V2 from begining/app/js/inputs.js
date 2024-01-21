@@ -5,6 +5,8 @@ let mousePosLast = new Vector2D(0, 0);
 let centeredOnIndx = -1;
 let spawnParticles = false;
 let paused = true;
+let width = 1000;
+let height = 1000;
 
 document.onkeydown = function(pressed){
     if(pressed.key == "ArrowRight"){
@@ -80,7 +82,7 @@ canvas.addEventListener("mouseup", (pressed) => {
     let mouseDif = mousePos.sub(mousePosLast).scale(1/25);
     mousePosLast = mousePos.sub(mouseDif);
 
-    let newParticle = [mousePos, mousePosLast, [0, 0], 10, 10, "#FFFFFF", "down"];
+    let newParticle = {position: mousePos, positionLast: mousePosLast, force: {x: 0, y: 0}, mass: 10, radius: 10, color: "#FFFFFF", gravType: "down"};
 
     socket.emit('spwnParticle', newParticle);
 
