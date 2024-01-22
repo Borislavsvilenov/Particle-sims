@@ -7,6 +7,7 @@ const vec2 = require("./Vector2D"); // vector funcs
 
 let lastFrameTime = Date.now();
 let frameCount = 0;
+let spawnParticles = false;
 
 function calculateFPS() {
     const currentTime = Date.now();
@@ -45,6 +46,13 @@ io.on('connection', (socket) => {
                      new vec2(spwnParticle.force.x, spwnParticle.force.y), 
                      spwnParticle.mass, spwnParticle.radius, spwnParticle.color, spwnParticle.gravType);
     });
+    socket.on('spwnToggle', sig => {
+        if (spawnParticles) {
+            spawnParticles = false;
+        } else {
+            spawnParticles = true;
+        };
+    });
 });
 
 setInterval(() => {
@@ -54,6 +62,14 @@ setInterval(() => {
         particles[p].bounds();
         particles[p].checkCollision()
         particles[p].update();
+    };
+    if (frameCount % 1 == 0) {
+        if (spawnParticles) {
+            new Particle(new vec2(0, 0), 
+                        new vec2(-3, 0), 
+                        new vec2(0, 0), 
+                        10, 10, "#FFFFFF", "down");
+        };
     };
     calculateFPS();
 }, 1000 / 60);

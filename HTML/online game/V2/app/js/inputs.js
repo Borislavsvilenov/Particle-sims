@@ -40,21 +40,11 @@ document.onkeydown = function(pressed){
     }
 
     if(pressed.key == "s"){
-        if(spawnParticles){
-            spawnParticles = false;
-        } else {
-            spawnParticles = true;
-        }
+            socket.emit("spwnToggle", true)
     }
 
     if(pressed.key == " "){
-        if(paused){
-            paused = false;
-            socket.emit('pause', paused);
-        } else {
-            paused = true;
-            socket.emit('pause', paused);
-        }
+            socket.emit('pauseToggle', paused);
     }
 }
 document.onkeyup = function(pressed){
@@ -82,7 +72,7 @@ canvas.addEventListener("mouseup", (pressed) => {
     let mouseDif = mousePos.sub(mousePosLast).scale(1/25);
     mousePosLast = mousePos.sub(mouseDif);
 
-    let newParticle = {position: calculatePointPosition(mousePos), positionLast: calculatePointPosition(mousePosLast), force: {x: 0, y: 0}, mass: 10, radius: 10, color: "#FFFFFF", gravType: "OTO"};
+    let newParticle = {position: calculatePointPosition(mousePos), positionLast: calculatePointPosition(mousePosLast), force: {x: 0, y: 0}, mass: 10, radius: 10, color: "#FFFFFF", gravType: "down"};
 
     socket.emit('spwnParticle', newParticle);
 
