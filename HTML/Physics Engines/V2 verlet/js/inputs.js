@@ -78,7 +78,7 @@ canvas.addEventListener("mouseup", (pressed) => {
     let mouseNorm = mousePos.sub(mousePosLast).scale(1/25);
     mousePosLast = mousePos.sub(mouseNorm);
 
-    new ParticleRound(calculatePointPosition(mousePos), calculatePointPosition(mousePosLast), new Vector2D(0, 0), 10, 10, "#FFFFFF", "OTO");
+    new ParticleRound(calculatePointPosition(mousePos), calculatePointPosition(mousePosLast), new Vector2D(0, 0), 10, 10, "#FFFFFF", "down");
 
 });
 
