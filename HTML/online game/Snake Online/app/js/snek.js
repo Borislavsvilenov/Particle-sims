@@ -13,8 +13,10 @@ class snek {
     }
 
     update () {
-        for (let c = this.snekLength.length; c = 0; c--) {
+        for (let c = this.snekLength.length - 1; c = 0; c--) {
+            let segL = this.snekLength[c];
 
+                let segN = this.snekLength[c - 1];
         };
         if (this.dir == 1) {
             this.pos = this.pos.add(this.up);

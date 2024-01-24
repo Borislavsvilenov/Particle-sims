@@ -48,10 +48,8 @@ document.onkeydown = function(pressed){
     if(pressed.key == " "){
         if(paused){
             paused = false;
-            socket.emit('pause', paused);
         } else {
             paused = true;
-            socket.emit('pause', paused);
         }
     }
 }
@@ -81,7 +79,6 @@ canvas.addEventListener("mouseup", (pressed) => {
     mousePosLast = mousePos.sub(mouseNorm);
 
     new ParticleRound(calculatePointPosition(mousePos), calculatePointPosition(mousePosLast), new Vector2D(0, 0), 10, 10, "#FFFFFF", "OTO");
-    socket.emit('updateList', particles);
 
 });
 

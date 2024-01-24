@@ -72,7 +72,7 @@ canvas.addEventListener("mouseup", (pressed) => {
     let mouseDif = mousePos.sub(mousePosLast).scale(1/25);
     mousePosLast = mousePos.sub(mouseDif);
 
-    let newParticle = {position: calculatePointPosition(mousePos), positionLast: calculatePointPosition(mousePosLast), force: {x: 0, y: 0}, mass: 10, radius: 10, color: "#FFFFFF", gravType: "down"};
+    let newParticle = {position: calculatePointPosition(mousePos), positionLast: calculatePointPosition(mousePosLast), force: {x: 0, y: 0}, mass: 10, radius: 10, color: "#FFFFFF", gravType: "OTO"};
 
     socket.emit('spwnParticle', newParticle);
 
