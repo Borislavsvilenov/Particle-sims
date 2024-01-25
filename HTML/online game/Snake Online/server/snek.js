@@ -1,3 +1,5 @@
+let snakes = [];
+
 class snek {
     constructor (pos, dir, color, thickness) {
         this.pos = pos;
@@ -10,13 +12,13 @@ class snek {
         this.left = new Vector2D(-thickness, 0);
 
         this.snekLength = [pos];
-    }
+
+        snakes.push(this);
+    };
 
     update () {
-        for (let c = this.snekLength.length - 1; c = 0; c--) {
-            let segL = this.snekLength[c];
-
-                let segN = this.snekLength[c - 1];
+        for (let c = this.snekLength.length - 1; c > 0; c--) {
+            this.snekLength[c] = this.snekLength[c - 1];
         };
         if (this.dir == 1) {
             this.pos = this.pos.add(this.up);
@@ -28,4 +30,10 @@ class snek {
             this.pos = this.pos.add(this.left);
         };
     };
+
+    eat () {
+        this.snekLength.push(this.pos);
+    };
 };
+
+module.exports(snek, snakes);
