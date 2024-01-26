@@ -1,4 +1,7 @@
 let snakes = [];
+let apples = [];
+
+const vec2 = require("./Vector2D");
 
 class snek {
     constructor (pos, dir, color, thickness) {
@@ -6,10 +9,10 @@ class snek {
         this.dir = dir;
         this.color = color;
         this.thickness = thickness;
-        this.up = new Vector2D(0, -thickness);
-        this.down = new Vector2D(0, thickness);
-        this.right = new Vector2D(thickness, 0);
-        this.left = new Vector2D(-thickness, 0);
+        this.up = new vec2(0, -thickness);
+        this.down = new vec2(0, thickness);
+        this.right = new vec2(thickness, 0);
+        this.left = new vec2(-thickness, 0);
 
         this.snekLength = [pos];
 
@@ -36,4 +39,13 @@ class snek {
     };
 };
 
-module.exports(snek, snakes);
+class Apple {
+    constructor (pos, thickness) {
+        this.pos = pos;
+        this.thickness = thickness;
+
+        apples.push(this);
+    };
+};
+
+module.exports = {snek, Apple, snakes, apples};
