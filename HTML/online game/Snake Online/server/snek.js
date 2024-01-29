@@ -15,6 +15,7 @@ class snek {
         this.left = new vec2(-thickness, 0);
 
         this.snekLength = [pos];
+        this.state = "Live";
 
         snakes.push(this);
     };
@@ -38,6 +39,12 @@ class snek {
     eat () {
         this.snekLength.push(this.pos);
     };
+
+    kill () {
+        this.state = "Ded";
+
+    };
+
 };
 
 class Apple {

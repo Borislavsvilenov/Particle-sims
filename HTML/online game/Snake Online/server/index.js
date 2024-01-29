@@ -40,7 +40,15 @@ io.on("connection", (socket) => {
 
     socket.on("dir", dir => {
         let idx = players.indexOf(socket);
-        snakes[idx].dir = dir;
+        if (dir == 1 && snakes[idx].dir != 3) {
+            snakes[idx].dir = dir;
+        } else if (dir == 2 && snakes[idx].dir != 4) {
+            snakes[idx].dir = dir;
+        } else if (dir == 3 && snakes[idx].dir != 1) {
+            snakes[idx].dir = dir;
+        } else if (dir == 4 && snakes[idx].dir != 2) {
+            snakes[idx].dir = dir;
+        };
     });
 });
 
@@ -51,11 +59,20 @@ setInterval(() => {
         };
     };
     for (let i = 0; i < snakes.length; i++) {
-        snakes[i].update()
-        for (let a = 0; a < apples.length; a++) {
-            if (snakes[i].pos.x == apples[a].pos.x && snakes[i].pos.y == apples[a].pos.y) {
-                snakes[i].eat();
-                apples.splice(a, 1);
+        if (snakes[i].state == "Live") {
+            snakes[i].update()
+            for (let sn = 0; sn < snakes.length; sn++) {
+                for (let sp = 1; sp < snakes[sn].snekLength.length; sp++) {
+                    if (snakes[i].pos.x == snakes[sn].snekLength[sp].x && snakes[i].pos.y == snakes[sn].snekLength[sp].y) {
+                        snakes[i].kill();
+                    };
+                };
+            };
+            for (let a = 0; a < apples.length; a++) {
+                if (snakes[i].pos.x == apples[a].pos.x && snakes[i].pos.y == apples[a].pos.y) {
+                    snakes[i].eat();
+                    apples.splice(a, 1);
+                };
             };
         };
     };
