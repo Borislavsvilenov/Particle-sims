@@ -5,7 +5,7 @@ const vec2 = require("./Vector2D");
 const {snek, Apple, snakes, apples} = require("./snek");
 
 let players = [];
-let maxApples = 5;
+let maxApples = 100;
 
 function randomInt(min, max) {
     min = Math.ceil(min);
@@ -33,10 +33,10 @@ function randomColor() {
 io.on("connection", (socket) => {
     console.log(socket + " connected");
     players.push(socket);
-    new snek (new vec2(randomInt(0, 60) * 10 + 100, (randomInt(0, 60) * 10 + 100)),
+    snakes.push(new snek (new vec2(randomInt(0, 60) * 10 + 100, (randomInt(0, 60) * 10 + 100)),
               randomInt(1, 4),
               randomColor(),
-              10);
+              10));
 
     socket.on("dir", dir => {
         let idx = players.indexOf(socket);
@@ -63,6 +63,10 @@ setInterval(() => {
                 for (let sp = 1; sp < snakes[sn].snekLength.length; sp++) {
                     if (snakes[i].pos.x == snakes[sn].snekLength[sp].x && snakes[i].pos.y == snakes[sn].snekLength[sp].y) {
                         snakes[i].kill();
+                        snakes[i] = new snek (new vec2(randomInt(0, 60) * 10 + 100, (randomInt(0, 60) * 10 + 100)),
+                                              randomInt(1, 4),
+                                              randomColor(),
+                                              10);
                     };
                 };
             };

@@ -17,8 +17,6 @@ class snek {
 
         this.snekLength = [pos];
         this.state = "Live";
-
-        snakes.push(this);
     };
 
     update () {
