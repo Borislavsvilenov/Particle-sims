@@ -83,4 +83,4 @@ setInterval(() => {
     io.emit("update", msg);
 }, 1000/10);
 
-http.listen(8080, () => console.log('listening on http://localhost:8080'));
+http.listen(8080, () => console.log('listening on http://localhost:8081'));
