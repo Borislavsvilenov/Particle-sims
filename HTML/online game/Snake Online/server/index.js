@@ -5,7 +5,7 @@ const vec2 = require("./Vector2D");
 const {snek, Apple, snakes, apples} = require("./snek");
 
 let players = [];
-let maxApples = 100;
+let maxApples = 20;
 
 function randomInt(min, max) {
     min = Math.ceil(min);
@@ -49,6 +49,8 @@ io.on("connection", (socket) => {
         } else if (dir == 4 && snakes[idx].dir != 2) {
             snakes[idx].newDir = dir;
         };
+
+        socket.emit("size", snakes[idx].snekLength.length);
     });
 });
 
