@@ -1,7 +1,7 @@
 const canvas = document.getElementById("Area");
 const ctx = canvas.getContext("2d");
-const canvasWidth = canvas.getWidth;
-const canvasHeight = canvas.getHeight;
+const canvasWidth = canvas.width;
+const canvasHeight = canvas.height;
 let canvasColor = "#000000";
 
 function clearScreen(){
@@ -9,10 +9,10 @@ function clearScreen(){
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 };
 
-function drawSnek (snek) {
-    ctx.fillStyle = snek.color;
-    for (let draw = 0; draw < snek.snekLength.length; draw++) {
-        ctx.fillRect(snek.snekLength[draw].x, snek.snekLength[draw].y, snek.thickness, snek.thickness);
+function drawSnek (TheSnek) {
+    ctx.fillStyle = TheSnek.color;
+    for (let draw = 0; draw < TheSnek.snekLength.length; draw++) {
+        ctx.fillRect(TheSnek.snekLength[draw].x, TheSnek.snekLength[draw].y, TheSnek.thickness, TheSnek.thickness);
     };
 };
 

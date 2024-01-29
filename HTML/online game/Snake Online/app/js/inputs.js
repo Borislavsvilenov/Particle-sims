@@ -1,4 +1,4 @@
-document.onkeydown = function(pressed){
+document.onkeydown = pressed => {
     if(pressed.key == "ArrowRight"){
         socket.emit("dir", 2);
     } else if (pressed.key == "ArrowLeft") {

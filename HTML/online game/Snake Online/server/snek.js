@@ -25,13 +25,14 @@ class snek {
         };
         if (this.dir == 1) {
             this.pos = this.pos.add(this.up);
-        } else if (this.dit == 2) {
+        } else if (this.dir == 2) {
             this.pos = this.pos.add(this.right);
         } else if (this.dir == 3) {
             this.pos = this.pos.add(this.down);
         } else if (this.dir == 4) {
             this.pos = this.pos.add(this.left);
         };
+        this.snekLength[0] = this.pos;
     };
 
     eat () {

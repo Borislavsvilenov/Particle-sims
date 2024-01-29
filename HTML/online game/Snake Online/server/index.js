@@ -33,10 +33,10 @@ function randomColor() {
 io.on("connection", (socket) => {
     console.log(socket + " connected");
     players.push(socket);
-    new snek(new vec2(randomInt(100, 700), randomInt(100, 700)),
+    new snek (new vec2(randomInt(0, 60) * 10 + 100, (randomInt(0, 60) * 10 + 100)),
               randomInt(1, 4),
               randomColor(),
-              5);
+              10);
 
     socket.on("dir", dir => {
         let idx = players.indexOf(socket);
@@ -47,20 +47,21 @@ io.on("connection", (socket) => {
 setInterval(() => {
     if (apples.length == 0) {
         for (let g = 0; g < maxApples; g++) {
-            new Apple(new vec2(randomInt(100, 700), randomInt(100, 700)), 5);
+            new Apple(new vec2(randomInt(0, 60) * 10 + 100, randomInt(0, 60) * 10 + 100), 10);
         };
     };
     for (let i = 0; i < snakes.length; i++) {
         snakes[i].update()
-        for (let a = 0; a < apples; a++) {
-            if (snakes[i].pos == apples[a].pos) {
+        for (let a = 0; a < apples.length; a++) {
+            if (snakes[i].pos.x == apples[a].pos.x && snakes[i].pos.y == apples[a].pos.y) {
                 snakes[i].eat();
                 apples.splice(a, 1);
             };
         };
     };
 
-    io.emit("update", (snakes, apples));
-}, 1000/5);
+    let msg = [snakes, apples];
+    io.emit("update", msg);
+}, 1000/10);
 
 http.listen(8080, () => console.log('listening on http://localhost:8080'));
