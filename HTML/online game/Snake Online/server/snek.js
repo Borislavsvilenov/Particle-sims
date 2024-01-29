@@ -13,6 +13,7 @@ class snek {
         this.down = new vec2(0, thickness);
         this.right = new vec2(thickness, 0);
         this.left = new vec2(-thickness, 0);
+        this.newDir = dir;
 
         this.snekLength = [pos];
         this.state = "Live";
@@ -21,6 +22,7 @@ class snek {
     };
 
     update () {
+        this.dir = this.newDir;
         for (let c = this.snekLength.length - 1; c > 0; c--) {
             this.snekLength[c] = this.snekLength[c - 1];
         };

@@ -41,22 +41,20 @@ io.on("connection", (socket) => {
     socket.on("dir", dir => {
         let idx = players.indexOf(socket);
         if (dir == 1 && snakes[idx].dir != 3) {
-            snakes[idx].dir = dir;
+            snakes[idx].newDir = dir;
         } else if (dir == 2 && snakes[idx].dir != 4) {
-            snakes[idx].dir = dir;
+            snakes[idx].newDir = dir;
         } else if (dir == 3 && snakes[idx].dir != 1) {
-            snakes[idx].dir = dir;
+            snakes[idx].newDir = dir;
         } else if (dir == 4 && snakes[idx].dir != 2) {
-            snakes[idx].dir = dir;
+            snakes[idx].newDir = dir;
         };
     });
 });
 
 setInterval(() => {
-    if (apples.length == 0) {
-        for (let g = 0; g < maxApples; g++) {
-            new Apple(new vec2(randomInt(0, 60) * 10 + 100, randomInt(0, 60) * 10 + 100), 10);
-        };
+    if (apples.length < maxApples) {
+        new Apple(new vec2(randomInt(0, 60) * 10 + 100, randomInt(0, 60) * 10 + 100), 10);
     };
     for (let i = 0; i < snakes.length; i++) {
         if (snakes[i].state == "Live") {
