@@ -5,7 +5,7 @@ const vec2 = require("./Vector2D");
 const {snek, Apple, snakes, apples} = require("./snek");
 
 let players = [];
-let maxApples = 20;
+let maxApples = 1000000;
 
 function randomInt(min, max) {
     min = Math.ceil(min);
@@ -38,8 +38,10 @@ io.on("connection", (socket) => {
               randomColor(),
               10));
 
+
+    let idx = players.indexOf(socket);
+
     socket.on("dir", dir => {
-        let idx = players.indexOf(socket);
         if (dir == 1 && snakes[idx].dir != 3) {
             snakes[idx].newDir = dir;
         } else if (dir == 2 && snakes[idx].dir != 4) {
@@ -49,14 +51,16 @@ io.on("connection", (socket) => {
         } else if (dir == 4 && snakes[idx].dir != 2) {
             snakes[idx].newDir = dir;
         };
-
-        socket.emit("size", snakes[idx].snekLength.length);
     });
+    setInterval(() => {
+        socket.emit("size", snakes[idx].snekLength.length);
+    }, 1000/10);
 });
 
 setInterval(() => {
     if (apples.length < maxApples) {
         new Apple(new vec2(randomInt(0, 60) * 10 + 100, randomInt(0, 60) * 10 + 100), 10);
+        // new Apple(new vec2(400, 400), 10);
     };
     for (let i = 0; i < snakes.length; i++) {
         if (snakes[i].state == "Live") {
@@ -65,10 +69,10 @@ setInterval(() => {
                 for (let sp = 1; sp < snakes[sn].snekLength.length; sp++) {
                     if (snakes[i].pos.x == snakes[sn].snekLength[sp].x && snakes[i].pos.y == snakes[sn].snekLength[sp].y) {
                         snakes[i].kill();
-                        snakes[i] = new snek (new vec2(randomInt(0, 60) * 10 + 100, (randomInt(0, 60) * 10 + 100)),
-                                              randomInt(1, 4),
-                                              randomColor(),
-                                              10);
+                        // snakes[i] = new snek (new vec2(randomInt(0, 60) * 10 + 100, (randomInt(0, 60) * 10 + 100)),
+                                              // randomInt(1, 4),
+                                              // randomColor(),
+                                              // 10);
                     };
                 };
             };
