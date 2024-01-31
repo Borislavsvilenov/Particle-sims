@@ -1,5 +1,7 @@
 #include <iostream>
-#include </opt/homebrew/Cellar/sfml/2.6.1/include/SFML/Graphics.hpp>
+
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 
 int main(){
     std::cout<<"hellol world!";
