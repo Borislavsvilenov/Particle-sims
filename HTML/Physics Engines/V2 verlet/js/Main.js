@@ -1,4 +1,3 @@
-
 function Main(){
     clearScreen();
 
@@ -12,7 +11,6 @@ function Main(){
         if(spawnParticles){
             if(frameCounter % 1 === 0){
                 new ParticleRound(new Vector2D(0, -50), new Vector2D(-3, -50), new Vector2D(0, 0), 10, 10, "#FFFFFF", "down");
-                socket.emit('updateList', particles);
             }
         }
     }
