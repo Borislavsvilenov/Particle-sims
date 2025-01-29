@@ -5,7 +5,7 @@ const vec2 = require("./Vector2D");
 const {snek, Apple, snakes, apples} = require("./snek");
 
 let players = [];
-let maxApples = 1000000;
+let maxApples = 10;
 
 function randomInt(min, max) {
     min = Math.ceil(min);
@@ -89,4 +89,4 @@ setInterval(() => {
     io.emit("update", msg);
 }, 1000/10);
 
-http.listen(8080, () => console.log('listening on http://localhost:8081'));
+http.listen(8081, () => console.log('listening on http://localhost:8081'));
