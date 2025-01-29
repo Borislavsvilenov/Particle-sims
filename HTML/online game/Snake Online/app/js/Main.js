@@ -1,4 +1,4 @@
-const socket = io(`http://${window.location.hostname}:8080`);
+const socket = io(`http://${window.location.hostname}:8081`);
 const sizeDisplay = document.getElementById("Size");
 
 socket.on("update", msg => {
